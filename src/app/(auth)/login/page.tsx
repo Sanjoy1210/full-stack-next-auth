@@ -33,12 +33,11 @@ export default function LoginPage() {
     });
 
     const onSubmit = async (values: {}) => {
-        console.log({values});
         try {
             setIsLoading(true);
             const res = await axios.post("/api/users/login", values);
-            console.log({res});
             toast("Login successfully", {duration: 3000, type: "success"});
+            router.push("/profile");
         } catch (e) {
             if (e instanceof Error) {
                 toast(e.message, {duration: 3000, type: "error"})

@@ -1,8 +1,9 @@
 interface IButtonProps {
     type:  "button" | "submit" | "reset" | undefined;
     text: string;
-    disabled: boolean;
-    isLoading: boolean;
+    disabled?: boolean;
+    isLoading?: boolean;
+    onClick?: () => void;
 };
 export default function RegularBtn({ type, text, ...props }: IButtonProps) {
     return (
