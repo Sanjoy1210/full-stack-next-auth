@@ -1,6 +1,6 @@
 "use client";
 
-import {Controller, FieldErrors, FieldValues, useFormContext} from "react-hook-form";
+import {Controller, FieldError, FieldErrors, FieldErrorsImpl, Merge, useFormContext} from "react-hook-form";
 
 interface IProps {
     label: string;
@@ -10,7 +10,15 @@ interface IProps {
 };
 
 export default function FormInput({ label, name, type, ...props } : IProps) {
-    const { formState: {errors}, control } = useFormContext();
+    const { formState, control } = useFormContext();
+    const {errors} : { errors?:
+            | string
+            | FieldError
+            | Merge<FieldError, FieldErrorsImpl<any>>
+            | undefined
+    } = formState;
+
+    const er = errors?.[name]?.message as string;
 
     return (
         <Controller
@@ -31,7 +39,7 @@ export default function FormInput({ label, name, type, ...props } : IProps) {
                     {
                         errors ?
                         <div className="mt-2 block text-sm text-red-500">
-                            {errors?.[name]?.message}
+                            {er}
                         </div> : null
                     }
                 </>

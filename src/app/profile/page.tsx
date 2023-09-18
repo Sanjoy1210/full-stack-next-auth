@@ -5,30 +5,45 @@ import RegularBtn from "@/components/Buttons/Buttons";
 import toast from "react-hot-toast";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
+import {unknown} from "zod";
 
+interface IUser {
+    email: string;
+    firstName: string;
+    lastName: string;
+};
 export default function ProfilePage() {
-    const [user, setUser] = useState({});
     const router = useRouter();
+    const [user, setUser] = useState({} as IUser);
     const logout = async () => {
         try {
             await axios.get("/api/users/logout");
-            toast("Logout successful", {duration: 3000, type: "success"});
+            toast.success("Logout successful");
             router.push("/login");
         } catch (e) {
             if (e instanceof Error) {
-                toast(e.message, {duration: 3000, type: "error"});
+                toast.error(e.message);
             }
         }
     }
 
     const getUserDetails = async () => {
         const res = await axios.get("/api/users/me");
-        setUser(res.data.data);
+
+        setUser({
+            email: res?.data?.data?.email,
+            firstName: res?.data?.data?.firstName,
+            lastName: res?.data?.data?.lastName
+        });
     }
 
     useEffect(() => {
         getUserDetails();
     }, []);
+
+    if (!Object?.keys(user as IUser)?.length) {
+        return "Loading...";
+    }
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2">

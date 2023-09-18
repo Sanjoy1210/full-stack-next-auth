@@ -36,12 +36,10 @@ export default function LoginPage() {
         try {
             setIsLoading(true);
             const res = await axios.post("/api/users/login", values);
-            toast("Login successfully", {duration: 3000, type: "success"});
+            toast.success("Login successfully");
             router.push("/profile");
-        } catch (e) {
-            if (e instanceof Error) {
-                toast(e.message, {duration: 3000, type: "error"})
-            }
+        } catch (e: any) {
+            console.log({e});
         } finally {
             setIsLoading(false);
         }
