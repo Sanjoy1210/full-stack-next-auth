@@ -40,7 +40,6 @@ export default function SignupPage() {
             const res = await axios.post("/api/users/signup", values);
             router.push("/login");
         } catch (e) {
-            console.log({e});
             if (e instanceof Error) {
                 toast(e.message, {duration: 3000, type: "error"});
             }

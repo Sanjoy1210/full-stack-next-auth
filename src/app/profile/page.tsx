@@ -16,7 +16,6 @@ export default function ProfilePage() {
             router.push("/login");
         } catch (e) {
             if (e instanceof Error) {
-                console.log(e.message);
                 toast(e.message, {duration: 3000, type: "error"});
             }
         }
@@ -30,8 +29,6 @@ export default function ProfilePage() {
     useEffect(() => {
         getUserDetails();
     }, []);
-
-    console.log(user);
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
