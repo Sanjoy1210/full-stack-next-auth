@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
     try {
         const reqBody = await req.json();
         const {email, password} = reqBody;
-        console.log(reqBody);
 
         // check user exist or not
         const user = await User.findOne({email});
@@ -33,7 +32,7 @@ export async function POST(req: NextRequest) {
             id: user._id,
             email: user.email,
         };
-        const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET, {expiresIn: "1d"});
+        const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {expiresIn: "1d"});
 
         const res = NextResponse.json({
             message: "Login successful",
